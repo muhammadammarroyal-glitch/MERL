@@ -1,0 +1,23 @@
+module multiplicator (
+  input[3:0] m,
+  input[3:0] q,
+  
+  output[3:0] and_out,
+  output[3:0] pp0_out,
+  output[3:0] pp1_out,
+  output[3:0] pp2_out,
+  output[3:0] pp3_out,
+  output[3:0] pp4_out,
+  output[3:0] pp5_out
+  
+);
+  
+  assign and_out[3:0] = m[3:0] & q[3:0];
+  assign pp0_out[3:0] = and_out[3:0];
+  assign pp1_out[3:0] = pp0_out[3:0] | q[3:0];
+  assign pp2_out[3:0] = pp1_out[3:0];
+  assign pp3_out[3:0] = pp2_out[3:0] | q[3:0];
+  assign pp4_out[3:0] = pp3_out[3:0];
+  assign pp5_out[3:0] = pp4_out[3:0] | q[3:0];
+  
+endmodule
