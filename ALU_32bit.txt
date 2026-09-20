@@ -1,0 +1,50 @@
+// Code your design here
+// Code your design here
+module ALU_32bit(
+  
+  input[31:0] a,
+  input[31:0] b,
+  input [4:0] sel,
+  
+  output[31:0] result
+);
+  wire [31:0] add_result = a + b;
+  wire [31:0] sll_result = a << b[4:0];
+  
+  wire slt_bit = ($signed(a)< $signed(b));
+  wire [31:0] slt_result = {31'b0, slt_bit}; 
+  
+  wire sltu_bit = (a < b);
+  wire [31:0] sltu_result = {31'b0, sltu_bit};
+  
+  wire [31:0] xor_result = a ^ b;
+  wire [31:0] srl_result = a >> b[4:0];
+   wire [31:0] or_result = a | b;
+  wire [31:0] and_result = a & b;
+  wire [31:0] sub_result = a - b;
+  wire [31:0] sra_result = $signed(a) >>> b[4:0];
+  
+  reg  [31:0] mux;
+  
+  always @(*)begin
+    
+    case(sel)
+      
+       5'b00000: mux = add_result;
+       5'b00001: mux = sll_result;
+       5'b00010: mux = slt_result;
+       5'b00011: mux = sltu_result;
+       5'b00100: mux = xor_result;
+       5'b00101: mux = srl_result;
+       5'b00110: mux = or_result;
+       5'b00111: mux = and_result;
+       5'b01000: mux = sub_result;
+       5'b01101: mux = sra_result;
+      
+      default: mux = 32'b0;
+      
+      endcase
+  end 
+  assign result = mux;
+  
+endmodule
