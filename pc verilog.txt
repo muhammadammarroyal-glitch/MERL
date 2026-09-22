@@ -1,0 +1,31 @@
+module PC_32bit (
+  
+  input wire [31:0]imm,
+  input wire clk,
+  input wire enable,
+  input wire reset,
+  input wire sel, 
+  output reg [31:0] pc_current
+);
+  // wiring
+  wire [31:0] pc_plus_4;
+  wire [31:0] pc_plus_imm;
+  wire [31:0] mux_to_data;
+  
+  // adder A and B
+  assign pc_plus_4 = pc_current + 32'd4;
+  assign pc_plus_imm = pc_current + imm;
+  
+  // mux to data
+  assign mux_to_data = (sel)? pc_plus_imm : pc_plus_4;
+  
+  // Register clk,enable and reset logic
+  always@(posedge clk or posedge reset)begin
+    if (reset) begin 
+      pc_currnt <= 32'b0;
+    end
+    else if (enable) begin
+      pc_current <=  next_pc ;
+    end
+  end
+  
